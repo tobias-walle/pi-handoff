@@ -49,7 +49,7 @@ export default function (
     executionMode: "sequential",
     description: [
       "Start a fresh context and automatically continue with the supplied prompt.",
-      "Use ONLY when the user explicitly requests a new context or session, including a conditional request such as 'when finished, start a new context for X'.",
+      "Use ONLY when the user explicitly requests a new context, session or explicit handoff, including a conditional request such as 'when finished, start a new context for X' or 'do a handoff between each task'.",
       "Never initiate a handoff on your own, including to reduce context usage or organize work.",
       "A request to continue with another task alone does not authorize a new context. If unclear, ask the user.",
       "Include all relevant context, decisions, files, and next tasks in the prompt. The new session does not receive the old conversation automatically.",
