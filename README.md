@@ -29,31 +29,15 @@ Restart pi or run `/reload`.
 
 Ask your agent for a handoff. It writes a prompt and submits it in a fresh session, keeping the current model and reasoning level unless you specify otherwise.
 
-### Handoff now
+> Do a handoff and implement PLAN.md. Create a new context for every phase.
 
-> Handoff to a new context and review the changes in src/api.ts.
+> Fix all open bug tickets. Do a handoff between each bug to work in a new context. Use openai-codex/gpt-6.1-sol with high reasoning.
 
-### Finish first, then handoff
+> Finish the implementation, then do a handoff to review the changes.
 
-> Finish the tests, then handoff to a new context to review the changes.
+> Do a handoff and review the API for security issues. Name the session "API security review".
 
-### Carry over a plan
-
-> Handoff to a new context to implement docs/plan.md. Include our decisions and the files we already changed.
-
-### Name the session
-
-> Handoff to a new context for a security review. Name the session "API security review".
-
-### Change the model
-
-> Handoff to a new context using openai/gpt-4.1 with reasoning off. Review the error handling.
-
-Use an exact `provider/model-id` available in your pi setup.
-
-### Change only the reasoning level
-
-> Handoff to a new context with high reasoning. Keep the current model and investigate the failing tests.
+> Investigate the failing tests. Do a handoff first and use high reasoning with the current model.
 
 ### Tool parameters
 
