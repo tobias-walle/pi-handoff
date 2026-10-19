@@ -14,13 +14,37 @@ Restart pi or run `/reload`.
 
 ## Usage
 
-Ask your agent:
+Ask your agent for a handoff. It writes a prompt and submits it in a fresh session, keeping the current model and reasoning level unless you specify otherwise.
 
-> Finish the tests, then start a new context to review the changes.
+### Handoff now
 
-The agent writes a handoff prompt and submits it in a new session. The current model and reasoning level carry over unless you ask for different ones.
+> Handoff to a new context and review the changes in src/api.ts.
 
-The tool accepts:
+### Finish first, then handoff
+
+> Finish the tests, then handoff to a new context to review the changes.
+
+### Carry over a plan
+
+> Handoff to a new context to implement docs/plan.md. Include our decisions and the files we already changed.
+
+### Name the session
+
+> Handoff to a new context for a security review. Name the session "API security review".
+
+### Change the model
+
+> Handoff to a new context using openai/gpt-4.1 with reasoning off. Review the error handling.
+
+Use an exact `provider/model-id` available in your pi setup.
+
+### Change only the reasoning level
+
+> Handoff to a new context with high reasoning. Keep the current model and investigate the failing tests.
+
+### Tool parameters
+
+The `handoff` tool accepts:
 
 - `prompt`: context and instructions for the new session.
 - `title`: optional session name.
