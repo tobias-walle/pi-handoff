@@ -1,0 +1,6 @@
+node_modules/
+.check-cache/
+coverage/
+tests/.cache/
+*.log
+.DS_Store
