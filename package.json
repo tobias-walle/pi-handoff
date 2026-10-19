@@ -1,7 +1,7 @@
 {
   "name": "pi-handoff",
   "version": "0.1.0",
-  "description": "Start a fresh pi session with a focused draft or a model-requested handoff.",
+  "description": "Let your pi agent continue a task in a fresh session.",
   "type": "module",
   "license": "MIT",
   "repository": {

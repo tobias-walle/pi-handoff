@@ -1,4 +1,4 @@
-/** Model-requested context handoff. The manual /handoff command stays separate. */
+/** Model-requested context handoff. */
 import { randomUUID } from "node:crypto";
 import type {
   ExtensionAPI,
