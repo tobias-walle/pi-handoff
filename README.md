@@ -2,6 +2,19 @@
 
 Adds a `handoff` tool to [pi](https://pi.dev) so your agent can continue work in a fresh session when you ask it to.
 
+```mermaid
+flowchart LR
+    subgraph current["Current session"]
+        A["You request a handoff"] --> B["Agent gathers context<br/>and next steps"]
+    end
+    B -->|"handoff prompt"| C
+    subgraph fresh["Fresh session"]
+        C["Prompt becomes the<br/>first message"] --> D["Agent continues<br/>the task"]
+    end
+```
+
+Only the handoff prompt carries over, not the full conversation.
+
 ## Install
 
 ```sh
