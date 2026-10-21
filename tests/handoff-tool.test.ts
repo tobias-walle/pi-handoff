@@ -3,6 +3,7 @@ import {
   handoffAssistant as assistant,
   handoffFixture as fixture,
 } from "./support/handoff.ts";
+import { required } from "./support/ui.ts";
 
 function handoffId(details: unknown): string {
   if (
@@ -39,6 +40,32 @@ describe("handoff tool", () => {
       }),
     );
   });
+
+  test.each([
+    { entries: [] },
+    { entries: [{ status: "requested" }] },
+    { entries: [{ status: "cancelled" }] },
+  ])(
+    "keeps a non-handoff session as origin with outgoing $entries",
+    async ({ entries }) => {
+      const f = await fixture();
+      const header = required(f.manager.getHeader());
+      vi.spyOn(f.manager, "getHeader").mockReturnValue({
+        ...header,
+        parentSession: "ancestor.jsonl",
+      });
+      vi.spyOn(f.manager, "getSessionFile").mockReturnValue("origin.jsonl");
+      for (const entry of entries)
+        f.manager.appendCustomEntry("handoff-tool", {
+          sourceSessionId: f.manager.getSessionId(),
+          ...entry,
+        });
+
+      await f.execute();
+      await f.finish();
+      expect(f.state.parentSession).toBe("origin.jsonl");
+    },
+  );
 
   test("names the new session before it starts", async () => {
     const f = await fixture();

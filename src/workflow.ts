@@ -85,6 +85,25 @@ function cancellationReason(
   return undefined;
 }
 
+function handoffParent(ctx: ExtensionContext): string | undefined {
+  // Only incoming setup entries identify a continuation. Outgoing requests and
+  // cancellations also use ENTRY_TYPE, but must not change an origin's parent.
+  const continuation = ctx.sessionManager
+    .getEntries()
+    .some(
+      (entry) =>
+        entry.type === "custom" &&
+        entry.customType === ENTRY_TYPE &&
+        typeof entry.data === "object" &&
+        entry.data !== null &&
+        "sourceSessionId" in entry.data &&
+        !("status" in entry.data),
+    );
+  return continuation
+    ? ctx.sessionManager.getHeader()?.parentSession
+    : ctx.sessionManager.getSessionFile();
+}
+
 /** One runtime owns claiming and cancellation. No persisted request is replayed. */
 export class HandoffWorkflow {
   private pending: PendingHandoff | undefined;
@@ -142,7 +161,7 @@ export class HandoffWorkflow {
     };
     this.pending = {
       details,
-      parentSession: ctx.sessionManager.getSessionFile(),
+      parentSession: handoffParent(ctx),
       signal,
       running: false,
     };

@@ -67,6 +67,7 @@ type RuntimeFixture = Readonly<{
 }>;
 
 type RuntimeOptions = {
+  handoffCount?: number;
   overrides?: { model?: string | undefined; reasoning?: string | undefined };
   replacementModel?: "missing" | "unauthenticated";
   changeSelectionAfterSetup?: boolean;
@@ -166,7 +167,7 @@ export async function handoffRuntimeFixture(
                   reasoning: request?.reasoning,
                 });
                 requests.push(structuredClone([...context.messages]));
-                const first = requests.length === 1;
+                const first = requests.length <= (options.handoffCount ?? 1);
                 const message: AssistantMessage = {
                   role: "assistant",
                   api: "openai-completions",
@@ -281,7 +282,8 @@ export async function handoffRuntimeFixture(
         ) => {
           try {
             const result = await runtime.newSession(replacementOptions);
-            finished.resolve();
+            if (requests.length > (options.handoffCount ?? 1))
+              finished.resolve();
             return result;
           } catch (error) {
             finished.reject(error);
